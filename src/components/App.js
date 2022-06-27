@@ -44,8 +44,9 @@ function App() {
         title="Редактировать профиль"
         isOpen={isEditProfilePopupOpen}
         onClose={closeAllPopups}
+        submitButtonText={'Сохранить'}
       >
-        <form className="popup__form" name="popup-form" noValidate>
+        <>
           <input
             placeholder="Имя"
             name="name"
@@ -66,18 +67,16 @@ function App() {
             required
           />
           <span className="popup__form-input-error description-input-error"></span>
-          <button className="popup__form-submit" type="submit">
-            Сохранить
-          </button>
-        </form>
+        </>
       </PopupWithForm>
       <PopupWithForm
         name="card"
         title="Новое место"
         isOpen={isAddPlacePopupOpen}
         onClose={closeAllPopups}
+        submitButtonText={'Создать'}
       >
-        <form className="popup__card-form" name="popup-card-form" noValidate>
+        <>
           <input
             placeholder="Название"
             name="place-name"
@@ -97,28 +96,17 @@ function App() {
             required
           />
           <span className="popup__form-input-error place-link-error"></span>
-          <button
-            className="popup__form-submit popup__form-submit_disabled"
-            type="submit"
-          >
-            Создать
-          </button>
-        </form>
+        </>
       </PopupWithForm>
-      <PopupWithForm name="remove" title="Вы уверены">
-        <form className="popup__form" name="popup-remove-form" noValidate>
-          <button className="popup__form-submit" type="submit">
-            Да
-          </button>
-        </form>
-      </PopupWithForm>
+      <PopupWithForm name="remove" title="Вы уверены" submitButtonText="Да" />
       <PopupWithForm
         name="avatar"
         title="Обновить аватар"
         isOpen={isEditAvatarPopupOpen}
         onClose={closeAllPopups}
+        submitButtonText={'Сохранить'}
       >
-        <form className="popup__form" name="popup-avatar-form" noValidate>
+        <>
           <input
             placeholder="Ссылка на аватар"
             name="avatar"
@@ -128,10 +116,7 @@ function App() {
             required
           />
           <span className="popup__form-input-error avatar-link-error"></span>
-          <button className="popup__form-submit" type="submit">
-            Сохранить
-          </button>
-        </form>
+        </>
       </PopupWithForm>
       <ImagePopup selectedCard={selectedCard} onClose={closeAllPopups} />
     </>

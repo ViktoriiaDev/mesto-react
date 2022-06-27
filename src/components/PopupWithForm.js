@@ -8,7 +8,12 @@ const PopupWithForm = (props) => {
           <img className="popup__close-icon" src={closeIcon} alt="Крест" />
         </button>
         <h2 className="popup__title">{props.title}</h2>
-        {props.children}
+        <form className="popup__form" name={props.name} noValidate>
+          {props.children}
+          <button className="popup__form-submit" type="submit">
+            {props.submitButtonText}
+          </button>
+        </form>
       </div>
     </div>
   )
