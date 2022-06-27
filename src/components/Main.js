@@ -1,7 +1,7 @@
 import React from 'react';
 import edit from '../images/edit.svg';
 import plus from '../images/plus.svg';
-import { api } from '../utils/api.js'
+import { api } from '../utils/ap.js'
 import Card from './Card';
 
 const Main = ({ onAddPlace, onCardClick, onEditProfile, onEditAvatar }) => {
