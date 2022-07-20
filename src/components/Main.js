@@ -1,25 +1,16 @@
 import React from 'react';
 import edit from '../images/edit.svg';
 import plus from '../images/plus.svg';
-import { api } from '../utils/api.js'
 import Card from './Card';
+import CurrentUserContext from "../contexts/CurrentUserContext.js";
+import { api } from '../utils/api.js';
+
 
 const Main = ({ onAddPlace, onCardClick, onEditProfile, onEditAvatar }) => {
-  const [userName, setUserName] = React.useState(null);
-  const [userDescription, setUserDescription] = React.useState(null);
-  const [userAvatar, setUserAvatar] = React.useState(null);
+  const currentUser = React.useContext(CurrentUserContext);
   const [cards, setCards] = React.useState([]);
 
   React.useEffect(() => {
-    api.getProfileInfo()
-      .then(result => {
-        setUserName(result.name);
-        setUserDescription(result.about);
-        setUserAvatar(result.avatar)
-      })
-      .catch((err) => {
-        console.log(err);
-      });
       api.getInitialCards()
       .then(result => {
         setCards(result);
@@ -34,19 +25,19 @@ const Main = ({ onAddPlace, onCardClick, onEditProfile, onEditAvatar }) => {
     <main>
       <section className="profile">
         <div className="profile__avatar" onClick={onEditAvatar}>
-          <img className="profile__avatar-image" src={userAvatar} alt={userName} />
+          <img className="profile__avatar-image" src={currentUser.avatar} alt={currentUser.name} />
           <div className="profile__avatar-edit">
             <img className="profile__avatar-edit-pencil" src={edit} alt="Карандаш" />
           </div>
         </div>
         <div className="profile__info">
           <div className="profile__info-top">
-            <h1 className="profile__info-title">{userName}</h1>
+            <h1 className="profile__info-title">{currentUser.name}</h1>
             <button className="profile__edit-button" type="button" onClick={onEditProfile}>
               <img className="profile__edit-button-pencil" src={edit} alt="Карандаш" />
             </button>
           </div>
-          <h2 className="profile__info-subtitle">{userDescription}</h2>
+          <h2 className="profile__info-subtitle">{currentUser.about}</h2>
         </div>
         <button className="profile__add-button" type="button" onClick={onAddPlace}>
           <img className="profile__add-button-plus" src={plus} alt="Плюс" />
