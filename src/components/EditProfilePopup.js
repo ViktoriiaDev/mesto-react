@@ -10,7 +10,7 @@ const EditProfilePopup = ({ isOpen, onClose, onUpdateUser }) => {
   React.useEffect(() => {
     setName(currentUser.name);
     setDescription(currentUser.about);
-  }, [currentUser]);
+  }, [currentUser, isOpen]);
 
   function handleChangeName(e) {
     setName(e.target.value);
@@ -37,32 +37,30 @@ const EditProfilePopup = ({ isOpen, onClose, onUpdateUser }) => {
       submitButtonText={"Сохранить"}
       onSubmit={handleSubmit}
     >
-      <>
-        <input
-          value={name}
-          onChange={handleChangeName}
-          placeholder="Имя"
-          name="name"
-          id="name-input"
-          className="popup__form-input popup__form-input_input_name"
-          minLength="2"
-          maxLength="40"
-          required
-        />
-        <span className="popup__form-input-error name-input-error"></span>
-        <input
-          value={description}
-          onChange={handleChangeDescription}
-          placeholder="Профессия"
-          name="description"
-          id="description-input"
-          className="popup__form-input popup__form-input_input_description"
-          minLength="2"
-          maxLength="200"
-          required
-        />
-        <span className="popup__form-input-error description-input-error"></span>
-      </>
+      <input
+        value={name}
+        onChange={handleChangeName}
+        placeholder="Имя"
+        name="name"
+        id="name-input"
+        className="popup__form-input popup__form-input_input_name"
+        minLength="2"
+        maxLength="40"
+        required
+      />
+      <span className="popup__form-input-error name-input-error"></span>
+      <input
+        value={description}
+        onChange={handleChangeDescription}
+        placeholder="Профессия"
+        name="description"
+        id="description-input"
+        className="popup__form-input popup__form-input_input_description"
+        minLength="2"
+        maxLength="200"
+        required
+      />
+      <span className="popup__form-input-error description-input-error"></span>
     </PopupWithForm>
   );
 };

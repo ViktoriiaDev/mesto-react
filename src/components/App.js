@@ -17,11 +17,30 @@ function App() {
   });
   const [cards, setCards] = React.useState([]);
 
-  const [isEditProfilePopupOpen, setEditProfilePopupOpen] =
+  const [isEditProfilePopupOpen, setIsEditProfilePopupOpen] =
     React.useState(false);
   const [isEditAvatarPopupOpen, setEditAvatarPopupOpen] = React.useState(false);
   const [isAddPlacePopupOpen, setAddPlacePopupOpen] = React.useState(false);
   const [selectedCard, setSelectedCard] = React.useState(null);
+  const isOpen =
+    isEditAvatarPopupOpen ||
+    isEditProfilePopupOpen ||
+    isAddPlacePopupOpen ||
+    selectedCard;
+
+  React.useEffect(() => {
+    function closeByEscape(evt) {
+      if (evt.key === "Escape") {
+        closeAllPopups();
+      }
+    }
+    if (isOpen) {
+      document.addEventListener("keydown", closeByEscape);
+      return () => {
+        document.removeEventListener("keydown", closeByEscape);
+      };
+    }
+  }, [isOpen]);
 
   React.useEffect(() => {
     api
@@ -43,7 +62,7 @@ function App() {
   }, []);
 
   const handleEditProfileClick = () => {
-    setEditProfilePopupOpen(!isEditProfilePopupOpen);
+    setIsEditProfilePopupOpen(!isEditProfilePopupOpen);
   };
   const handleEditAvatarClick = () => {
     setEditAvatarPopupOpen(!isEditAvatarPopupOpen);
@@ -77,7 +96,7 @@ function App() {
   };
 
   const closeAllPopups = () => {
-    setEditProfilePopupOpen(false);
+    setIsEditProfilePopupOpen(false);
     setEditAvatarPopupOpen(false);
     setAddPlacePopupOpen(false);
     setSelectedCard(null);
@@ -122,40 +141,38 @@ function App() {
   };
 
   return (
-    <>
-      <CurrentUserContext.Provider value={currentUser}>
-        <Header />
-        <Main
-          onCardClick={setSelectedCard}
-          onEditProfile={handleEditProfileClick}
-          onEditAvatar={handleEditAvatarClick}
-          onAddPlace={handleAddPlaceClick}
-          onCardLike={handleCardLike}
-          onCardDelete={handleCardDelete}
-          cards={cards}
-        />
-        <Footer />
-        <EditProfilePopup
-          isOpen={isEditProfilePopupOpen}
-          onClose={closeAllPopups}
-          onUpdateUser={handleUpdateUser}
-        />
-        <AddPlacePopup
-          isOpen={isAddPlacePopupOpen}
-          onClose={closeAllPopups}
-          onAddPlace={handleAddPlace}
-        />
-        <PopupWithForm name="remove" title="Вы уверены" submitButtonText="Да" />
+    <CurrentUserContext.Provider value={currentUser}>
+      <Header />
+      <Main
+        onCardClick={setSelectedCard}
+        onEditProfile={handleEditProfileClick}
+        onEditAvatar={handleEditAvatarClick}
+        onAddPlace={handleAddPlaceClick}
+        onCardLike={handleCardLike}
+        onCardDelete={handleCardDelete}
+        cards={cards}
+      />
+      <Footer />
+      <EditProfilePopup
+        isOpen={isEditProfilePopupOpen}
+        onClose={closeAllPopups}
+        onUpdateUser={handleUpdateUser}
+      />
+      <AddPlacePopup
+        isOpen={isAddPlacePopupOpen}
+        onClose={closeAllPopups}
+        onAddPlace={handleAddPlace}
+      />
+      <PopupWithForm name="remove" title="Вы уверены" submitButtonText="Да" />
 
-        <EditAvatarPopup
-          isOpen={isEditAvatarPopupOpen}
-          onClose={closeAllPopups}
-          onUpdateAvatar={handleUpdateAvatar}
-        />
+      <EditAvatarPopup
+        isOpen={isEditAvatarPopupOpen}
+        onClose={closeAllPopups}
+        onUpdateAvatar={handleUpdateAvatar}
+      />
 
-        <ImagePopup selectedCard={selectedCard} onClose={closeAllPopups} />
-      </CurrentUserContext.Provider>
-    </>
+      <ImagePopup selectedCard={selectedCard} onClose={closeAllPopups} />
+    </CurrentUserContext.Provider>
   );
 }
 
